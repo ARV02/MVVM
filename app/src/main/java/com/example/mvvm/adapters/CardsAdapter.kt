@@ -34,8 +34,9 @@ class CardsAdapter : RecyclerView.Adapter<CardsAdapter.ViewHolder>() {
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         private val binding = ItemViewBinding.bind(view)
         fun bind(cards:CardDetails){
-            binding.tvLast.text = cards.cardLast4
-
+            binding.last4.text = cards.cardLast4
+            binding.exp.text = cards.cardExpDetails
+            binding.cardImage.text = cards.cardType
         }
 
     }

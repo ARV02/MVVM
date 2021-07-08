@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 showError()
             }
         })
+        viewModel.getAllCards()
     }
 
     private fun showError(){

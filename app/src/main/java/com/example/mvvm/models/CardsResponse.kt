@@ -3,7 +3,7 @@ package com.example.mvvm.models
 import com.google.gson.annotations.SerializedName
 
 data class CardsResponse (
-    @SerializedName("")
+    @SerializedName("cardDetails")
     var cardDetails:ArrayList<CardDetails>
     )
 

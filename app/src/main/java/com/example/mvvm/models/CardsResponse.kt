@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CardsResponse (
     @SerializedName("cardDetails")
-    var cardDetails:ArrayList<CardDetails>
+    var cardDetails:MutableList<CardDetails>
     )
 
 data class CardDetails(

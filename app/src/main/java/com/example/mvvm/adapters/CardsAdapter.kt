@@ -12,9 +12,9 @@ import com.example.mvvm.models.CardsResponse
 import com.example.mvvm.models.MainViewModel
 
 class CardsAdapter : RecyclerView.Adapter<CardsAdapter.ViewHolder>() {
-    var items = ArrayList<CardDetails>()
+    var items = mutableListOf<CardDetails>()
 
-    fun setUpdateData(items:ArrayList<CardDetails>){
+    fun setUpdateData(items:MutableList<CardDetails>){
         this.items = items
         notifyDataSetChanged()
     }
@@ -30,6 +30,11 @@ class CardsAdapter : RecyclerView.Adapter<CardsAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    fun delete(position:Int){
+        items.removeAt(position)
+        notifyItemRemoved(position)
     }
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         private val binding = ItemViewBinding.bind(view)

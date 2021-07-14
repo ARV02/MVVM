@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm.R
 
-class SwipeToDelete(context: Context, dragDir:Int, swipeDir:Int):ItemTouchHelper.SimpleCallback(dragDir, swipeDir) {
+abstract class SwipeToDelete(context:Context, dragDir:Int, swipeDir:Int): ItemTouchHelper.SimpleCallback(dragDir, swipeDir) {
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete)
     private val intrinsicWidth = deleteIcon?.intrinsicWidth
     private val intrinsicHeight = deleteIcon?.intrinsicHeight
@@ -27,6 +27,7 @@ class SwipeToDelete(context: Context, dragDir:Int, swipeDir:Int):ItemTouchHelper
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
     }
+
     override fun onChildDraw(
         c: Canvas,
         recyclerView: RecyclerView,

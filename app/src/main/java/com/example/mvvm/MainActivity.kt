@@ -2,6 +2,7 @@ package com.example.mvvm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.NetworkOnMainThreadException
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,12 +14,13 @@ import com.example.mvvm.databinding.ActivityMainBinding
 import com.example.mvvm.models.CardDetails
 import com.example.mvvm.models.CardsResponse
 import com.example.mvvm.models.MainViewModel
+import com.example.mvvm.network.NetworkConnectionInterceptor
 import com.example.mvvm.utils.SwipeToDelete
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private lateinit var recyclerAdapter:CardsAdapter
-    private val dataList = mutableListOf<CardDetails>()
+    private val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         initViewModel()
         viewModel()
         deleteCard()
+        swipeRefresh()
     }
 
     private fun initViewModel(){
@@ -45,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         viewModel.getAllCards()
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     private fun deleteCard(){
@@ -61,6 +65,11 @@ class MainActivity : AppCompatActivity() {
     private fun showError(){
         Toast.makeText(this, "Error", Toast.LENGTH_LONG)
             .show()
+    }
+    private fun swipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel()
+        }
     }
 
     companion object {

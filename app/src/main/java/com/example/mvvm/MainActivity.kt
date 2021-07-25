@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.NetworkOnMainThreadException
 import android.widget.Toast
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,16 +22,33 @@ import com.example.mvvm.utils.SwipeToDelete
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private lateinit var recyclerAdapter:CardsAdapter
-    private val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+    private lateinit var networkConnectionInterceptor:NetworkConnectionInterceptor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+        networkConnectionInterceptor.observe(this, { isNetworkAvailable ->
+
+            ConnectivityMonitor(isNetworkAvailable = isNetworkAvailable)
+        })
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         initViewModel()
         viewModel()
         deleteCard()
         swipeRefresh()
+    }
+
+    fun ConnectivityMonitor(isNetworkAvailable:Boolean ){
+        //var connectionString = "Valid connection"
+        if(!isNetworkAvailable) {
+            //connectionString = "No network connection"
+            Toast.makeText(this, "No network connection", Toast.LENGTH_LONG)
+                .show()
+        }
+        Toast.makeText(this, "Valid connection", Toast.LENGTH_LONG)
+            .show()
     }
 
     private fun initViewModel(){

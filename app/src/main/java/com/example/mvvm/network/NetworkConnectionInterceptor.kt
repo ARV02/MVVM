@@ -1,42 +1,64 @@
 package com.example.mvvm.network
 
 import android.content.Context
+import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
-import com.example.mvvm.utils.NoInternetException
-import okhttp3.Interceptor
-import okhttp3.Response
+import android.net.Network
+import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+import android.net.NetworkRequest
+import android.util.Log
+import androidx.lifecycle.LiveData
+import com.example.mvvm.interactors.DoesNetworkHaveInternet
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class NetworkConnectionInterceptor(context:Context):Interceptor {
-    private val applicationContext = context.applicationContext
+val TAG = "Manager"
+class NetworkConnectionInterceptor(context:Context): LiveData<Boolean>() {
+    private lateinit var networkCallback: ConnectivityManager.NetworkCallback
+    private val cm = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+    private val validNetworks:MutableSet<Network> = HashSet()
 
-    override fun intercept(chain: Interceptor.Chain): Response {
-        if(!isInternetAvailable())
-            throw NoInternetException("No hay connexion a Internet")
-        return chain.proceed(chain.request())
+    private fun checkValidNetworks(){
+        postValue(validNetworks.size > 0)
     }
 
-    @Suppress("DEPRECATION")
-    private fun isInternetAvailable() : Boolean {
-        var connected = false
-        val connectivityManager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE)
-                as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val networkCapabilities = connectivityManager.activeNetwork ?: return false
-            val activeNetwork =
-                connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+    override fun onActive() {
+        networkCallback = createNetworkCallback()
+        val networkRequest = NetworkRequest.Builder()
+            .addCapability(NET_CAPABILITY_INTERNET)
+            .build()
+        cm.registerNetworkCallback(networkRequest, networkCallback)
+    }
 
-            return when {
+    override fun onInactive() {
+        cm.unregisterNetworkCallback(networkCallback)
+    }
 
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ||
-                        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                else -> false
-            }
-        } else {
-            return connectivityManager.activeNetworkInfo != null &&
-                    connectivityManager.activeNetworkInfo!!.isConnectedOrConnecting
+    private fun createNetworkCallback() = object:ConnectivityManager.NetworkCallback(){
+        override fun onAvailable(network: Network) {
+            Log.d(TAG, "onAvailable: $network")
+            val networkCapabilities = cm.getNetworkCapabilities(network)
+            val hasInternetCapability = networkCapabilities?.hasCapability(NET_CAPABILITY_INTERNET)
+            Log.d(TAG, "onAvailable; $network, $hasInternetCapability")
+            if (hasInternetCapability == true)
+                CoroutineScope(Dispatchers.IO).launch {
+                    val hasInternet = DoesNetworkHaveInternet.execute(network.socketFactory)
+                    if (hasInternet)
+                        withContext(Dispatchers.Main){
+                            Log.d(TAG, "onAvailable: adding network. ${network}")
+                            validNetworks.add(network)
+                            checkValidNetworks()
+                        }
+                }
+        }
+
+        override fun onLost(network: Network) {
+            Log.d(TAG, "onLost: ${network}")
+            validNetworks.remove(network)
+            checkValidNetworks()
         }
     }
+
 }

@@ -40,15 +40,16 @@ class MainActivity : AppCompatActivity() {
         swipeRefresh()
     }
 
-    fun ConnectivityMonitor(isNetworkAvailable:Boolean ){
+    private fun ConnectivityMonitor(isNetworkAvailable:Boolean ){
         //var connectionString = "Valid connection"
         if(!isNetworkAvailable) {
             //connectionString = "No network connection"
             Toast.makeText(this, "No network connection", Toast.LENGTH_LONG)
                 .show()
+        }else {
+            Toast.makeText(this, "Valid connection", Toast.LENGTH_LONG)
+                .show()
         }
-        Toast.makeText(this, "Valid connection", Toast.LENGTH_LONG)
-            .show()
     }
 
     private fun initViewModel(){

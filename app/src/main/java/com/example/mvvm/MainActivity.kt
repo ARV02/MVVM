@@ -3,6 +3,7 @@ package com.example.mvvm
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.NetworkOnMainThreadException
+import android.view.View
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -41,14 +42,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ConnectivityMonitor(isNetworkAvailable:Boolean ){
-        //var connectionString = "Valid connection"
+        var connectionString = "Valid connection"
         if(!isNetworkAvailable) {
-            //connectionString = "No network connection"
-            Toast.makeText(this, "No network connection", Toast.LENGTH_LONG)
-                .show()
+            connectionString = "No network connection"
+            binding.network.text = connectionString
+            binding.network.visibility = View.VISIBLE
+           // Toast.makeText(this, "No network connection", Toast.LENGTH_LONG)
+                //.show()
         }else {
-            Toast.makeText(this, "Valid connection", Toast.LENGTH_LONG)
-                .show()
+            binding.network.text = connectionString
+            binding.network.visibility = View.VISIBLE
+            //Toast.makeText(this, "Valid connection", Toast.LENGTH_LONG)
+                //.show()
         }
     }
 

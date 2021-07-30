@@ -46,18 +46,13 @@ class MainActivity : AppCompatActivity() {
             connectionString = "No network connection"
             binding.network.text = connectionString
             binding.linearLayout.visibility = View.VISIBLE
-
-           // Toast.makeText(this, "No network connection", Toast.LENGTH_LONG)
-                //.show()
-        }else {
+        }else if(isNetworkAvailable) {
             GlobalScope.launch(Dispatchers.Main) {
                 binding.network.text = connectionString
                 binding.linearLayout.visibility = View.VISIBLE
                 delay(5000)
-                binding.linearLayout.visibility = View.INVISIBLE
+                binding.linearLayout.visibility = View.GONE
             }
-            //Toast.makeText(this, "Valid connection", Toast.LENGTH_LONG)
-                //.show()
         }
     }
 

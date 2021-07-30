@@ -47,7 +47,7 @@ class NetworkConnectionInterceptor(context:Context): LiveData<Boolean>() {
                     val hasInternet = DoesNetworkHaveInternet.execute(network.socketFactory)
                     if (hasInternet)
                         withContext(Dispatchers.Main){
-                            Log.d(TAG, "onAvailable: adding network. ${network}")
+                            Log.d(TAG, "onAvailable: adding network. $network")
                             validNetworks.add(network)
                             checkValidNetworks()
                         }
@@ -55,7 +55,7 @@ class NetworkConnectionInterceptor(context:Context): LiveData<Boolean>() {
         }
 
         override fun onLost(network: Network) {
-            Log.d(TAG, "onLost: ${network}")
+            Log.d(TAG, "onLost: $network")
             validNetworks.remove(network)
             checkValidNetworks()
         }

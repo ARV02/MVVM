@@ -19,8 +19,10 @@ import com.example.mvvm.models.CardsResponse
 import com.example.mvvm.models.MainViewModel
 import com.example.mvvm.network.NetworkConnectionInterceptor
 import com.example.mvvm.utils.SwipeToDelete
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private lateinit var recyclerAdapter:CardsAdapter

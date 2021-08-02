@@ -32,14 +32,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        networkConnectionInterceptor = NetworkConnectionInterceptor(this)
-        networkConnectionInterceptor.observe(this, { isNetworkAvailable ->
-            ConnectivityMonitor(isNetworkAvailable = isNetworkAvailable)
-        })
         initViewModel()
         viewModel()
         deleteCard()
         swipeRefresh()
+        networkConnection()
     }
 
     private fun ConnectivityMonitor(isNetworkAvailable:Boolean ){
@@ -48,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             connectionString = "No network connection"
             binding.network.text = connectionString
             binding.linearLayout.visibility = View.VISIBLE
-        }else if(isNetworkAvailable) {
+        } else {
             GlobalScope.launch(Dispatchers.Main) {
                 binding.network.text = connectionString
                 binding.linearLayout.visibility = View.VISIBLE
@@ -56,6 +53,13 @@ class MainActivity : AppCompatActivity() {
                 binding.linearLayout.visibility = View.GONE
             }
         }
+    }
+
+    private fun networkConnection(){
+        networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+        networkConnectionInterceptor.observe(this, { isNetworkAvailable ->
+            ConnectivityMonitor(isNetworkAvailable = isNetworkAvailable)
+        })
     }
 
     private fun initViewModel(){

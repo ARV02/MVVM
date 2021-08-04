@@ -39,13 +39,13 @@ class MainActivity : AppCompatActivity() {
         networkConnection()
     }
 
-    private fun ConnectivityMonitor(isNetworkAvailable:Boolean ){
+    private fun ConnectivityMonitor(isNetworkAvailable:Boolean){
         var connectionString = "Valid connection"
         if(!isNetworkAvailable) {
             connectionString = "No network connection"
             binding.network.text = connectionString
             binding.linearLayout.visibility = View.VISIBLE
-        } else {
+        } else if(isNetworkAvailable){
             GlobalScope.launch(Dispatchers.Main) {
                 binding.network.text = connectionString
                 binding.linearLayout.visibility = View.VISIBLE

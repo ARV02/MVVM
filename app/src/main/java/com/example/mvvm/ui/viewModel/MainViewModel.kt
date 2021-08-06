@@ -1,11 +1,10 @@
-package com.example.mvvm.models
+package com.example.mvvm.ui.viewModel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mvvm.api.ApiInterface
-import com.example.mvvm.api.RetrofitInstance
-import com.example.mvvm.network.NetworkConnectionInterceptor
+import com.example.mvvm.data.network.ApiInterface
+import com.example.mvvm.data.models.CardsResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val api:ApiInterface):ViewModel() {
+class MainViewModel @Inject constructor(private val api: ApiInterface):ViewModel() {
     private var recyclerListLiveData: MutableLiveData<CardsResponse> = MutableLiveData()
 
     fun getRecyclerListObserver():MutableLiveData<CardsResponse>{

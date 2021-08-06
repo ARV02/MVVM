@@ -1,6 +1,6 @@
 package com.example.mvvm.di
 
-import com.example.mvvm.api.ApiInterface
+import com.example.mvvm.data.network.ApiInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providerApiInterface(retrofit:Retrofit):ApiInterface{
+    fun providerApiInterface(retrofit:Retrofit): ApiInterface {
         return retrofit.create(ApiInterface::class.java)
     }
 }

@@ -1,12 +1,9 @@
-package com.example.mvvm
+package com.example.mvvm.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.NetworkOnMainThreadException
 import android.view.View
 import android.widget.Toast
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,9 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm.adapters.CardsAdapter
 import com.example.mvvm.databinding.ActivityMainBinding
-import com.example.mvvm.models.CardDetails
-import com.example.mvvm.models.CardsResponse
-import com.example.mvvm.models.MainViewModel
+import com.example.mvvm.data.models.CardsResponse
+import com.example.mvvm.ui.viewModel.MainViewModel
 import com.example.mvvm.network.NetworkConnectionInterceptor
 import com.example.mvvm.utils.SwipeToDelete
 import dagger.hilt.android.AndroidEntryPoint

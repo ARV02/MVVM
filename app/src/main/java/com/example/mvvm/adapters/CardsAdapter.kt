@@ -1,15 +1,12 @@
 package com.example.mvvm.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm.R
 import com.example.mvvm.databinding.ItemViewBinding
-import com.example.mvvm.models.CardDetails
-import com.example.mvvm.models.CardsResponse
-import com.example.mvvm.models.MainViewModel
+import com.example.mvvm.data.models.CardDetails
 
 class CardsAdapter : RecyclerView.Adapter<CardsAdapter.ViewHolder>() {
     var items = mutableListOf<CardDetails>()

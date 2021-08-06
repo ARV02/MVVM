@@ -1,4 +1,4 @@
-package com.example.mvvm.network
+package com.example.mvvm.data.network
 
 import android.content.Context
 import android.content.Context.CONNECTIVITY_SERVICE

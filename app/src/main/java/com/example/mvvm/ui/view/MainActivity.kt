@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm.adapters.CardsAdapter
 import com.example.mvvm.databinding.ActivityMainBinding
 import com.example.mvvm.data.models.CardsResponse
+import com.example.mvvm.data.network.NetworkConnectionInterceptor
 import com.example.mvvm.ui.viewModel.MainViewModel
-import com.example.mvvm.network.NetworkConnectionInterceptor
 import com.example.mvvm.utils.SwipeToDelete
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
     private lateinit var binding:ActivityMainBinding
     private lateinit var recyclerAdapter:CardsAdapter
     private lateinit var networkConnectionInterceptor:NetworkConnectionInterceptor

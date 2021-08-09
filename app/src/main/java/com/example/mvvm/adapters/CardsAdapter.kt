@@ -38,8 +38,16 @@ class CardsAdapter : RecyclerView.Adapter<CardsAdapter.ViewHolder>() {
         fun bind(cards:CardDetails){
             binding.last4.text = cards.cardLast4
             binding.exp.text = cards.cardExpDetails
-            binding.cardImage.text = cards.cardType
-        }
 
+            if (cards.cardType == "Visa")
+                binding.cardImage.setImageResource(R.drawable.ic_visa)
+            else if (cards.cardType == "MasterCard")
+                binding.cardImage.setImageResource(R.drawable.ic_mastercard)
+            else if(cards.cardType == "American Express")
+                binding.cardImage.setImageResource(R.drawable.ic_amex)
+            else if(cards.cardType == "Discover")
+                binding.cardImage.setImageResource(R.drawable.ic_discover)
+
+        }
     }
 }

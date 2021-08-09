@@ -8,18 +8,77 @@
     tools:context=".ui.view.MainActivity">
 
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="355dp"
-        android:layout_height="665dp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/cardNumber"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_visa"
+            android:hint="Numero de tarjeta"
+            android:inputType="number"
+            android:paddingStart="5dp"
+            android:textColorHint="#808080"
+            tools:ignore="RtlSymmetry" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/expiration"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:hint="mm_yy"
+                android:inputType="number"
+                android:textColorHint="#808080" />
+
+            <EditText
+                android:id="@+id/cvc"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:hint="CVC"
+                android:inputType="number"
+                android:maxLength="4"
+                android:textColorHint="#808080" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/saveCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Agregar Tarjeta"
+            android:textColor="#fafafa" />
+    </LinearLayout>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="459dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="354dp"
-            android:layout_height="651dp" />
+            android:id="@+id/cardsRecycler"
+            android:layout_width="355dp"
+            android:layout_height="459dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
